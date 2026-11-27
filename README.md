@@ -1,10 +1,21 @@
-# GölgeFilo
+# GölgeFilo – React + FastAPI
 
-Büyükşehirlerde boş dönüş yapan ticari araçların kapasitesini işletmelerle buluşturan lojistik platformu. Tarayıcıda çalışan tek dosyalık arayüz prototipidir.
+`backend/` FastAPI + SQLite (JWT benzeri imzalı token, PBKDF2 şifre) · `frontend/` React + Vite + TypeScript (mobil öncelikli).
+Demo hesaplar: `demo@isletme.com` / `demo@sofor.com` — şifre `demo123`.
 
-## Sürümler
-- **version1** – Giriş/üyelik, işletme abonelik paketleri, şoför ve işletme panelleri, araç uyumluluk simülasyonu, gizlilik merkezi.
-- **version2** – Geliştirilmiş giriş ekranı, işletme "Araçlarım" bölümü, Akıllı Mühür ve anlık mikro-kargo sigortası, Escrow ödeme, Gelecek Boşluk Radarı, mola/esnaf noktaları, fotoğraf + 4 haneli kod teslim onayı, bildirim ağı, profesyonel imleç, Google/Apple Haritalar bağlantıları.
+## Geliştirme
+```
+cd backend && pip install -r requirements.txt && uvicorn main:app --reload      # :8000
+cd frontend && npm install && npm run dev                                       # :5173 (/api proxy'lenir)
+```
+## Tek sunucu (üretim)
+`cd frontend && npm run build` → `uvicorn main:app` (backend, `frontend/dist`'i de sunar). `GF_SECRET` ortam değişkenini mutlaka değiştir.
 
-## Çalıştırma
-`index.html` dosyasını tarayıcıda açın.
+## Telefon uygulaması (Capacitor)
+```
+cd frontend && VITE_API=https://api.alanadiniz.com npm run build
+npm i @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
+npx cap init GölgeFilo app.golgefilo --web-dir dist && npx cap add android && npx cap sync && npx cap open android
+```
+## Akış
+Şoför teklif verir → işletme onaylar (tutar escrow'a kilitlenir) → şoför mühür / varış / 4 haneli kod → ödeme şoföre (%6 komisyon sonrası) aktarılır.
