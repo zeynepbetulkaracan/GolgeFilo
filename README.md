@@ -7,4 +7,3 @@ Büyükşehirlerde boş dönüş yapan ticari araçların kapasitesini işletmel
 
 ## Çalıştırma
 `index.html` dosyasını tarayıcıda açın.
-
